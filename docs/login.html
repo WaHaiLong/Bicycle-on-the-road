@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - 骑行路上</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>欢迎回来</h2>
+      <p class="auth-subtitle">登录你的骑行账户</p>
+
+      <div id="error-msg" class="alert alert-error" style="display:none"></div>
+      <div id="success-msg" class="alert alert-success" style="display:none"></div>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>邮箱</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password" id="password" placeholder="请输入密码" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">登录</button>
+      </form>
+
+      <p class="auth-switch">
+        还没有账户？<a href="register.html">立即注册</a>
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="js/supabase.js"></script>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>
