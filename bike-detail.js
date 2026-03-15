@@ -33,6 +33,7 @@ async function loadBike() {
 
   renderBike()
   setupDatePicker()
+  loadBookedDates()
   loadReviews()
 }
 
@@ -68,6 +69,21 @@ function renderBike() {
     document.getElementById('book-btn').style.display = 'none'
     document.getElementById('login-tip').style.display = 'block'
   }
+}
+
+let bookedRanges = []
+
+async function loadBookedDates() {
+  const { data } = await supabase
+    .from('rentals')
+    .select('start_date, end_date')
+    .eq('bike_id', bikeId)
+    .in('status', ['pending', 'confirmed', 'active'])
+  bookedRanges = data || []
+}
+
+function isDateRangeConflict(start, end) {
+  return bookedRanges.some(r => start < r.end_date && end > r.start_date)
 }
 
 function setupDatePicker() {
@@ -119,6 +135,10 @@ window.bookBike = async function () {
   }
   if (end <= start) {
     alert('结束日期必须晚于开始日期')
+    return
+  }
+  if (isDateRangeConflict(start, end)) {
+    alert('所选日期与已有预订冲突，请选择其他日期')
     return
   }
 
