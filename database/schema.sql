@@ -106,10 +106,4 @@ CREATE OR REPLACE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION handle_new_user();
 
--- 示例数据
-INSERT INTO bikes (name, brand, model, size, price_per_day, description, image_url, location, frame_material, groupset, weight_kg) VALUES
-('速龙碳纤公路车', 'Giant', 'TCR Advanced', 'M', 150, '专业级碳纤维公路车，搭载Shimano Ultegra套件，适合爱好者和竞技骑手。', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', '北京朝阳区', '碳纤维', 'Shimano Ultegra R8000', 7.2),
-('铝合金入门公路车', 'Trek', 'Domane AL 2', 'S', 80, '轻量铝合金车架，适合初学者和日常通勤骑行，舒适性佳。', 'https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=800', '上海静安区', '铝合金', 'Shimano Claris', 9.8),
-('钛合金旅行公路车', 'Surly', 'Cross-Check', 'L', 200, '钛合金车架耐久性极高，适合长途骑行和自行车旅行爱好者。', 'https://images.unsplash.com/photo-1486401899868-0e435ed85128?w=800', '广州天河区', '钛合金', 'Shimano 105 R7000', 8.5),
-('竞速碳纤公路车', 'Specialized', 'Tarmac SL7', 'M', 300, '顶级竞速利器，SRAM Force AXS无线电变，极致轻量化设计。', 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=800', '深圳南山区', '碳纤维', 'SRAM Force AXS', 6.8),
-('经典铝合金公路车', 'Cannondale', 'Synapse 105', 'L', 120, 'Cannondale经典车型，Shimano 105套件，舒适几何设计，适合长途骑行。', 'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=800', '成都武侯区', '铝合金', 'Shimano 105 R7000', 9.1);
+-- 无示例数据，由真实用户注册后通过"发布车辆"页面添加
