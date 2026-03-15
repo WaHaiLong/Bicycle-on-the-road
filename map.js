@@ -3,6 +3,8 @@ import { supabase } from './supabase.js'
 let map
 let allBikes = []
 let markers = []
+let userLocationMarker = null
+let userLocationCircle = null
 
 const DEFAULT_IMG = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200'
 
@@ -118,6 +120,67 @@ function renderMarkers(bikes) {
   if (bounds.length) {
     map.fitBounds(bounds, { padding: [50, 50], maxZoom: 13 })
   }
+}
+
+window.locateUser = function () {
+  if (!navigator.geolocation) {
+    alert('您的浏览器不支持定位功能')
+    return
+  }
+
+  const btn = document.getElementById('locate-btn')
+  btn.disabled = true
+  btn.textContent = '⏳ 定位中...'
+
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude, accuracy } = pos.coords
+
+      // 移除旧的用户位置标记
+      if (userLocationMarker) map.removeLayer(userLocationMarker)
+      if (userLocationCircle) map.removeLayer(userLocationCircle)
+
+      // 精度圆圈
+      userLocationCircle = L.circle([latitude, longitude], {
+        radius: accuracy,
+        color: '#2563eb',
+        fillColor: '#93c5fd',
+        fillOpacity: 0.2,
+        weight: 1
+      }).addTo(map)
+
+      // 用户位置标记
+      const userIcon = L.divIcon({
+        html: `<div style="
+          width:16px; height:16px; background:#2563eb; border:3px solid #fff;
+          border-radius:50%; box-shadow:0 2px 6px rgba(37,99,235,.6);
+        "></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        className: ''
+      })
+      userLocationMarker = L.marker([latitude, longitude], { icon: userIcon })
+        .addTo(map)
+        .bindPopup('📍 您当前的位置')
+        .openPopup()
+
+      map.setView([latitude, longitude], 13)
+
+      btn.disabled = false
+      btn.innerHTML = '📍 定位我的位置'
+    },
+    (err) => {
+      btn.disabled = false
+      btn.innerHTML = '📍 定位我的位置'
+      const msgs = {
+        1: '您拒绝了定位权限，请在浏览器设置中允许访问位置',
+        2: '无法获取位置信息，请检查网络或设备 GPS',
+        3: '定位超时，请重试'
+      }
+      alert(msgs[err.code] || '定位失败，请重试')
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+  )
 }
 
 // 等 Leaflet 全局对象加载后初始化

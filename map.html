@@ -30,6 +30,16 @@
       z-index: 1000; background: rgba(0,0,0,.6); color: #fff;
       padding: .4rem 1rem; border-radius: 20px; font-size: .85rem;
     }
+    .locate-btn {
+      position: absolute; top: 80px; right: 16px;
+      z-index: 1000; background: #fff; border: none; border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      padding: .55rem .9rem; cursor: pointer; font-size: .85rem;
+      color: #2563eb; font-weight: 600; display: flex; align-items: center; gap: .4rem;
+      transition: background .15s;
+    }
+    .locate-btn:hover { background: #eff6ff; }
+    .locate-btn:disabled { color: #9ca3af; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -78,6 +88,9 @@
       </select>
     </div>
 
+    <button class="locate-btn" id="locate-btn" onclick="locateUser()" title="定位到我的位置">
+      📍 定位我的位置
+    </button>
     <div id="map"></div>
     <div class="map-count" id="map-count" style="display:none"></div>
   </div>
