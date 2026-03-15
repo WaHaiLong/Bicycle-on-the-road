@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test"
+    "test": "node --test tests/unit.test.js",
+    "test:integration": "node --test tests/supabase.test.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
