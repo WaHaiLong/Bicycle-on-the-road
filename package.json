@@ -1,0 +1,14 @@
+{
+  "name": "bicycle-on-the-road",
+  "version": "1.0.0",
+  "description": "Bicycle on the road application with Supabase backend",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4"
+  }
+}
