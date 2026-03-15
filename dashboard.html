@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>车主仪表盘 - 骑行路上</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">浏览车辆</a>
+        <a href="my-rentals.html">我的租约</a>
+        <a href="list-bike.html">发布车辆</a>
+        <a href="dashboard.html" style="color:#2563eb;font-weight:700">车主仪表盘</a>
+        <div id="nav-user">
+          <span id="nav-username" class="nav-username"></span>
+          <button class="btn btn-outline" onclick="signOut()">退出</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <h1>车主仪表盘</h1>
+    <p style="color:#6b7280;margin-bottom:2rem">管理你发布的车辆和收到的租约请求</p>
+
+    <!-- 数据概览 -->
+    <div id="stats" class="stats-grid" style="display:none">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-bikes">-</div>
+        <div class="stat-label">我的车辆</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-pending">-</div>
+        <div class="stat-label">待确认租约</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-active">-</div>
+        <div class="stat-label">进行中</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-revenue">-</div>
+        <div class="stat-label">累计收入 (¥)</div>
+      </div>
+    </div>
+
+    <div id="loading" class="loading"><div class="spinner"></div><p>加载中...</p></div>
+
+    <!-- 我的车辆 -->
+    <section id="my-bikes-section" style="display:none;margin-top:2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <h2>我的车辆</h2>
+        <a href="list-bike.html" class="btn btn-primary btn-sm">+ 发布新车</a>
+      </div>
+      <div id="my-bikes-list"></div>
+    </section>
+
+    <!-- 收到的租约 -->
+    <section id="incoming-rentals-section" style="display:none;margin-top:2.5rem">
+      <h2 style="margin-bottom:1rem">收到的租约请求</h2>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchRentalTab('pending', event)">待确认</button>
+        <button class="tab-btn" onclick="switchRentalTab('confirmed', event)">已确认</button>
+        <button class="tab-btn" onclick="switchRentalTab('active', event)">骑行中</button>
+        <button class="tab-btn" onclick="switchRentalTab('completed', event)">已完成</button>
+        <button class="tab-btn" onclick="switchRentalTab('all', event)">全部</button>
+      </div>
+      <div id="incoming-rentals-list"></div>
+      <div id="no-rentals" style="display:none" class="empty-state">
+        <span>📋</span>
+        <h3>暂无租约</h3>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container"><p>&copy; 2024 骑行路上. 让每一次骑行都成为冒险.</p></div>
+  </footer>
+
+  <script type="module" src="supabase.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
