@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布车辆 - 骑行路上</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">浏览车辆</a>
+        <a href="my-rentals.html">我的租约</a>
+        <a href="list-bike.html">发布车辆</a>
+        <div id="nav-user">
+          <span id="nav-username" class="nav-username"></span>
+          <button class="btn btn-outline" onclick="signOut()">退出</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="form-page">
+      <h1>发布你的公路车</h1>
+      <p class="form-subtitle">让你的爱车在你不骑的时候为你创造收益</p>
+
+      <div id="error-msg" class="alert alert-error" style="display:none"></div>
+      <div id="success-msg" class="alert alert-success" style="display:none"></div>
+
+      <form id="list-bike-form" onsubmit="handleListBike(event)">
+        <div class="form-section">
+          <h3>基本信息</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>车辆名称 *</label>
+              <input type="text" id="name" placeholder="例：Giant TCR M码碳纤公路车" required>
+            </div>
+            <div class="form-group">
+              <label>品牌 *</label>
+              <input type="text" id="brand" placeholder="例：Giant / Trek / Specialized" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>型号</label>
+              <input type="text" id="model" placeholder="例：TCR Advanced">
+            </div>
+            <div class="form-group">
+              <label>尺寸 *</label>
+              <select id="size" required>
+                <option value="">选择尺寸</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>规格参数</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>车架材质</label>
+              <select id="frame-material">
+                <option value="">选择材质</option>
+                <option value="碳纤维">碳纤维</option>
+                <option value="铝合金">铝合金</option>
+                <option value="钛合金">钛合金</option>
+                <option value="钢">钢</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>变速组</label>
+              <input type="text" id="groupset" placeholder="例：Shimano 105 R7000">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>整车重量 (kg)</label>
+              <input type="number" id="weight" placeholder="例：8.5" step="0.1" min="3" max="20">
+            </div>
+            <div class="form-group">
+              <label>每日租金 (¥) *</label>
+              <input type="number" id="price" placeholder="例：150" min="1" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>地点与描述</h3>
+          <div class="form-group">
+            <label>所在城市/地区 *</label>
+            <input type="text" id="location" placeholder="例：北京朝阳区" required>
+          </div>
+          <div class="form-group">
+            <label>图片链接</label>
+            <input type="url" id="image-url" placeholder="https://...（支持 Unsplash 等图床链接）">
+          </div>
+          <div class="form-group">
+            <label>车辆描述</label>
+            <textarea id="description" rows="4" placeholder="描述车辆的特点、适用场景、使用状况等..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">发布车辆</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 骑行路上. 让每一次骑行都成为冒险.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="js/supabase.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/list-bike.js"></script>
+</body>
+</html>

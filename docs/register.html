@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册 - 骑行路上</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <h2>创建账户</h2>
+      <p class="auth-subtitle">加入骑行路上社区</p>
+
+      <div id="error-msg" class="alert alert-error" style="display:none"></div>
+      <div id="success-msg" class="alert alert-success" style="display:none"></div>
+
+      <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>昵称</label>
+          <input type="text" id="full-name" placeholder="你的昵称" required>
+        </div>
+        <div class="form-group">
+          <label>邮箱</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password" id="password" placeholder="至少8位密码" minlength="8" required>
+        </div>
+        <div class="form-group">
+          <label>确认密码</label>
+          <input type="password" id="confirm-password" placeholder="再次输入密码" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">注册</button>
+      </form>
+
+      <p class="auth-switch">
+        已有账户？<a href="login.html">立即登录</a>
+      </p>
+    </div>
+  </main>
+
+  <script type="module" src="js/supabase.js"></script>
+  <script type="module" src="js/register.js"></script>
+</body>
+</html>
