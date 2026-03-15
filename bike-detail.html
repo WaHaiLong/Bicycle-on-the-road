@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>车辆详情 - 骑行路上</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">浏览车辆</a>
+        <a href="my-rentals.html" id="nav-my-rentals" style="display:none">我的租约</a>
+        <a href="list-bike.html" id="nav-list-bike" style="display:none">发布车辆</a>
+        <div id="nav-auth">
+          <a href="login.html" class="btn btn-outline">登录</a>
+          <a href="register.html" class="btn btn-primary">注册</a>
+        </div>
+        <div id="nav-user" style="display:none">
+          <span id="nav-username" class="nav-username"></span>
+          <button class="btn btn-outline" onclick="signOut()">退出</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top: 2rem;">
+    <a href="index.html" class="back-link">← 返回列表</a>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>加载中...</p>
+    </div>
+
+    <div id="bike-detail" style="display:none">
+      <div class="detail-grid">
+        <div class="detail-image-section">
+          <img id="bike-image" src="" alt="车辆图片" class="detail-image">
+          <div class="detail-badges">
+            <span id="badge-material" class="badge"></span>
+            <span id="badge-size" class="badge"></span>
+          </div>
+        </div>
+
+        <div class="detail-info-section">
+          <h1 id="bike-name"></h1>
+          <p id="bike-brand" class="bike-brand-model"></p>
+
+          <div class="price-display">
+            <span id="bike-price" class="price-big"></span>
+            <span class="price-unit">/ 天</span>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="info-label">📍 地点</span>
+              <span id="bike-location" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">⚙️ 变速组</span>
+              <span id="bike-groupset" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">⚖️ 重量</span>
+              <span id="bike-weight" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">✅ 状态</span>
+              <span id="bike-status" class="info-value"></span>
+            </div>
+          </div>
+
+          <div class="description-section">
+            <h3>车辆介绍</h3>
+            <p id="bike-description"></p>
+          </div>
+
+          <div id="booking-section" class="booking-section">
+            <h3>预订租赁</h3>
+            <div class="date-picker-row">
+              <div class="form-group">
+                <label>开始日期</label>
+                <input type="date" id="start-date" min="" required>
+              </div>
+              <div class="form-group">
+                <label>结束日期</label>
+                <input type="date" id="end-date" min="" required>
+              </div>
+            </div>
+            <div id="price-preview" class="price-preview" style="display:none">
+              <span>预计费用：</span>
+              <strong id="total-price"></strong>
+            </div>
+            <div class="form-group">
+              <label>备注（可选）</label>
+              <textarea id="rental-notes" rows="2" placeholder="如有特殊需求请注明..."></textarea>
+            </div>
+            <button id="book-btn" class="btn btn-primary btn-block" onclick="bookBike()">立即预订</button>
+            <p id="login-tip" class="login-tip" style="display:none">
+              请先 <a href="login.html">登录</a> 再预订
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 评价 -->
+      <section class="reviews-section">
+        <h2>用户评价</h2>
+        <div id="reviews-list"></div>
+        <div id="no-reviews" style="display:none" class="empty-reviews">
+          <p>暂无评价，成为第一个评价者！</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 骑行路上. 让每一次骑行都成为冒险.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="supabase.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="bike-detail.js"></script>
+</body>
+</html>
