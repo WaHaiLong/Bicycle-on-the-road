@@ -1,0 +1,35 @@
+name: Database Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Migration to run'
+        required: true
+        default: 'delete_fake_bikes'
+        type: choice
+        options:
+          - delete_fake_bikes
+          - add_coordinates_columns
+
+env:
+  SUPABASE_URL: https://ecdpqimpqstrtewqhqoe.supabase.co
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run migration
+        run: |
+          if [ "${{ github.event.inputs.operation }}" = "delete_fake_bikes" ]; then
+            echo "Deleting bikes with no owner..."
+            curl -s -w "\nHTTP:%{http_code}" -X DELETE \
+              "$SUPABASE_URL/rest/v1/bikes?owner_id=is.null" \
+              -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+              -H "Prefer: return=representation"
+          fi
+
+          if [ "${{ github.event.inputs.operation }}" = "add_coordinates_columns" ]; then
+            echo "Note: Run add_coordinates.sql manually in Supabase SQL Editor"
+          fi
