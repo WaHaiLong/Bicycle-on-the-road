@@ -27,6 +27,8 @@ window.handleListBike = async function (e) {
   errorEl.style.display = 'none'
   successEl.style.display = 'none'
 
+  const latVal = document.getElementById('lat').value
+  const lngVal = document.getElementById('lng').value
   const bike = {
     name: document.getElementById('name').value.trim(),
     brand: document.getElementById('brand').value.trim(),
@@ -39,6 +41,8 @@ window.handleListBike = async function (e) {
     location: document.getElementById('location').value.trim(),
     image_url: document.getElementById('image-url').value.trim() || null,
     description: document.getElementById('description').value.trim() || null,
+    lat: latVal ? parseFloat(latVal) : null,
+    lng: lngVal ? parseFloat(lngVal) : null,
     available: true,
     owner_id: window._currentUserId
   }
@@ -61,6 +65,46 @@ window.handleListBike = async function (e) {
   btn.textContent = '发布成功'
 
   setTimeout(() => { window.location.href = `bike-detail.html?id=${data.id}` }, 2000)
+}
+
+window.geocodeLocation = async function () {
+  const location = document.getElementById('location').value.trim()
+  const btn = document.getElementById('geo-btn')
+  const result = document.getElementById('geo-result')
+
+  if (!location) {
+    result.textContent = '请先填写所在城市/地区'
+    return
+  }
+
+  btn.disabled = true
+  btn.textContent = '定位中...'
+  result.textContent = ''
+
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location + ' 中国')}&format=json&limit=1`,
+      { headers: { 'Accept-Language': 'zh-CN' } }
+    )
+    const data = await res.json()
+
+    if (data && data.length > 0) {
+      const { lat, lon, display_name } = data[0]
+      document.getElementById('lat').value = parseFloat(lat).toFixed(6)
+      document.getElementById('lng').value = parseFloat(lon).toFixed(6)
+      result.style.color = '#16a34a'
+      result.textContent = `✅ 已定位：${display_name.split(',').slice(0, 3).join(',')}`
+    } else {
+      result.style.color = '#dc2626'
+      result.textContent = '未找到该地区，请手动填写坐标'
+    }
+  } catch {
+    result.style.color = '#dc2626'
+    result.textContent = '网络错误，请手动填写坐标'
+  }
+
+  btn.disabled = false
+  btn.textContent = '📍 根据地区自动获取坐标'
 }
 
 init()

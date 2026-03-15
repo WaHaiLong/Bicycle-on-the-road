@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地图找车 - 骑行路上</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    #map { width: 100%; height: calc(100vh - 64px); }
+    .map-popup img { width: 120px; height: 80px; object-fit: cover; border-radius: 6px; margin-bottom: .5rem; }
+    .map-popup h3 { font-size: 1rem; margin-bottom: .25rem; }
+    .map-popup .popup-price { color: #2563eb; font-weight: 700; font-size: 1rem; }
+    .map-popup .popup-meta { font-size: .8rem; color: #6b7280; margin: .25rem 0; }
+    .map-popup a { display: block; margin-top: .5rem; text-align: center; background: #2563eb; color: #fff; padding: .3rem .8rem; border-radius: 6px; font-size: .85rem; text-decoration: none; }
+    .map-popup a:hover { background: #1d4ed8; }
+    .map-filter-bar {
+      position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; background: #fff; border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      padding: .6rem 1rem; display: flex; gap: .75rem; align-items: center;
+    }
+    .map-filter-bar select, .map-filter-bar input {
+      border: 1px solid #e5e7eb; border-radius: 8px; padding: .35rem .7rem;
+      font-size: .85rem; outline: none;
+    }
+    .map-filter-bar select:focus, .map-filter-bar input:focus { border-color: #2563eb; }
+    .map-count {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      z-index: 1000; background: rgba(0,0,0,.6); color: #fff;
+      padding: .4rem 1rem; border-radius: 20px; font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-icon">🚴</span>
+        <span>骑行路上</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">浏览车辆</a>
+        <a href="map.html" style="color:#2563eb;font-weight:700">地图找车</a>
+        <a href="my-rentals.html" id="nav-my-rentals" style="display:none">我的租约</a>
+        <a href="list-bike.html" id="nav-list-bike" style="display:none">发布车辆</a>
+        <a href="dashboard.html" id="nav-dashboard" style="display:none">车主仪表盘</a>
+        <div id="nav-auth">
+          <a href="login.html" class="btn btn-outline">登录</a>
+          <a href="register.html" class="btn btn-primary">注册</a>
+        </div>
+        <div id="nav-user" style="display:none">
+          <span id="nav-username" class="nav-username"></span>
+          <button class="btn btn-outline" onclick="signOut()">退出</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div style="position:relative">
+    <div class="map-filter-bar">
+      <span style="font-size:.85rem;color:#6b7280;white-space:nowrap">筛选：</span>
+      <select id="filter-available" onchange="applyFilters()">
+        <option value="">全部车辆</option>
+        <option value="true">仅可租赁</option>
+      </select>
+      <select id="filter-material" onchange="applyFilters()">
+        <option value="">全部材质</option>
+        <option value="碳纤维">碳纤维</option>
+        <option value="铝合金">铝合金</option>
+        <option value="钛合金">钛合金</option>
+      </select>
+      <select id="filter-price" onchange="applyFilters()">
+        <option value="">全部价格</option>
+        <option value="0-100">¥100以下/天</option>
+        <option value="100-200">¥100-200/天</option>
+        <option value="200+">¥200以上/天</option>
+      </select>
+    </div>
+
+    <div id="map"></div>
+    <div class="map-count" id="map-count" style="display:none"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="supabase.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="map.js"></script>
+</body>
+</html>

@@ -15,6 +15,7 @@
       </a>
       <div class="nav-links">
         <a href="index.html">浏览车辆</a>
+        <a href="map.html">地图找车</a>
         <a href="my-rentals.html">我的租约</a>
         <a href="list-bike.html">发布车辆</a>
         <div id="nav-user">
@@ -101,6 +102,20 @@
             <label>所在城市/地区 *</label>
             <input type="text" id="location" placeholder="例：北京朝阳区" required>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>纬度 <span style="font-weight:400;color:#9ca3af">(可选，用于地图显示)</span></label>
+              <input type="number" id="lat" placeholder="例：39.9042" step="any" min="-90" max="90">
+            </div>
+            <div class="form-group">
+              <label>经度 <span style="font-weight:400;color:#9ca3af">(可选，用于地图显示)</span></label>
+              <input type="number" id="lng" placeholder="例：116.4074" step="any" min="-180" max="180">
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="geocodeLocation()" id="geo-btn">
+            📍 根据地区自动获取坐标
+          </button>
+          <div id="geo-result" style="font-size:.8rem;margin-top:.4rem;color:#6b7280"></div>
           <div class="form-group">
             <label>图片链接</label>
             <input type="url" id="image-url" placeholder="https://...（支持 Unsplash 等图床链接）">
