@@ -24,6 +24,8 @@ export async function updateNav() {
     if (navUser) navUser.style.display = 'flex'
     if (navMyRentals) navMyRentals.style.display = 'inline'
     if (navListBike) navListBike.style.display = 'inline'
+    const navDashboard = document.getElementById('nav-dashboard')
+    if (navDashboard) navDashboard.style.display = 'inline'
     if (navUsername) {
       const { data: profile } = await supabase
         .from('profiles')
